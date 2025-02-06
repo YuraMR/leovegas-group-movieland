@@ -9,12 +9,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import 'reactjs-popup/dist/index.css'
 import { fetchMovies } from './data/moviesSlice'
-import {
-    ENDPOINT_SEARCH,
-    ENDPOINT_DISCOVER,
-    ENDPOINT,
-    API_KEY
-} from './constants/apiEndpoints'
 import Header from './components/Header'
 import Movies from './components/Movies'
 import Starred from './components/Starred'
@@ -22,6 +16,7 @@ import WatchLater from './components/WatchLater'
 import YouTubePlayer from './components/YoutubePlayer'
 import './app.scss'
 import ROUTES from './constants/routes'
+import { fetchMovieDetails } from './utils/apiEndpoints'
 
 const App = () => {
     const state = useSelector((state) => state)
@@ -39,10 +34,12 @@ const App = () => {
 
     const getSearchResults = (query) => {
         if (query !== '') {
-            dispatch(fetchMovies(`${ENDPOINT_SEARCH}&query=` + query))
+            /** implementation of api service must be hidden */
+            dispatch(fetchMovies(query))
             setSearchParams(createSearchParams({ search: query }))
         } else {
-            dispatch(fetchMovies(ENDPOINT_DISCOVER))
+            /** implementation of api service must be hidden */
+            dispatch(fetchMovies())
             setSearchParams()
         }
     }
@@ -54,9 +51,11 @@ const App = () => {
 
     const getMovies = () => {
         if (searchQuery) {
-            dispatch(fetchMovies(`${ENDPOINT_SEARCH}&query=` + searchQuery))
+            /** implementation of api service must be hidden */
+            dispatch(fetchMovies(searchQuery))
         } else {
-            dispatch(fetchMovies(ENDPOINT_DISCOVER))
+            /** implementation of api service must be hidden */
+            dispatch(fetchMovies())
         }
     }
 
@@ -67,10 +66,9 @@ const App = () => {
     }
 
     const getMovie = async (id) => {
-        const URL = `${ENDPOINT}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`
-
         setVideoKey(null)
-        const videoData = await fetch(URL).then((response) => response.json())
+        /** implementation of api service must be hidden  */
+        const videoData = await fetchMovieDetails(id)
 
         if (videoData.videos && videoData.videos.results.length) {
             const trailer = videoData.videos.results.find(
