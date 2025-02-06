@@ -8,7 +8,7 @@ import ROUTES from '../constants/routes'
 const WatchLater = ({ viewTrailer }) => {
     const state = useSelector((state) => state)
     const { watchLater } = state
-    const { remveAllWatchLater } = watchLaterSlice.actions
+    const { removeAllWatchLater } = watchLaterSlice.actions
     const dispatch = useDispatch()
 
     return (
@@ -32,7 +32,7 @@ const WatchLater = ({ viewTrailer }) => {
                     <footer className="text-center">
                         <button
                             className="btn btn-primary"
-                            onClick={() => dispatch(remveAllWatchLater())}
+                            onClick={() => dispatch(removeAllWatchLater())}
                         >
                             Empty list
                         </button>
