@@ -6,12 +6,14 @@ import {
 
 export const fetchMovies = createAsyncThunk(
     'movies/fetchMovies',
-    async (query, { rejectWithValue }) => {
+    async ({ query, page = 1 }, { rejectWithValue }) => {
         try {
             const apiUrl = query
-                ? getSearchMoviesApiUrl(query)
-                : getDiscoverMoviesApiUrl()
+                ? `${getSearchMoviesApiUrl({ query, page })}`
+                : `${getDiscoverMoviesApiUrl({ page })}`
+
             const response = await fetch(apiUrl)
+
             if (!response.ok) {
                 throw new Error(`HTTP Error: ${response.status}`)
             }
@@ -26,13 +28,23 @@ const moviesSlice = createSlice({
     name: 'movies',
     initialState: {
         movies: [],
+        currentPage: 1,
+        totalPages: 0,
         fetchStatus: ''
     },
-    reducers: {},
+    reducers: {
+        resetMovies: (state) => {
+            state.movies = []
+            state.currentPage = 1
+            state.totalPages = 0
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMovies.fulfilled, (state, action) => {
-                state.movies = action.payload
+                state.movies = [...state.movies, ...action.payload.results]
+                state.currentPage = action.payload.page
+                state.totalPages = action.payload.total_pages
                 state.fetchStatus = 'success'
             })
             .addCase(fetchMovies.pending, (state) => {
@@ -44,4 +56,5 @@ const moviesSlice = createSlice({
     }
 })
 
+export const { resetMovies } = moviesSlice.actions
 export default moviesSlice
