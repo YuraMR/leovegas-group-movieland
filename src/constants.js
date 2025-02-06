@@ -1,3 +1,6 @@
+/** 1. Values such as API_KEY must be declared as env variable in the repo (GitHub secrets)
+ *  2. The name of file is too generic: it must be endpoints.js or apiEndpoints.js
+ * */
 export const API_KEY = '8cac6dec66e09ab439c081b251304443'
 export const ENDPOINT = 'https://api.themoviedb.org/3'
 export const ENDPOINT_DISCOVER = `${ENDPOINT}/discover/movie/?api_key=${API_KEY}&sort_by=popularity.desc`
