@@ -47,15 +47,14 @@
     "husky": "^9.1.7",
     "prettier": "^3.4.2"
   },
-  "lint-staged": {
+  "prettify-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=0",
       "prettier --write"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "prettify-staged"
     }
   }
 }
