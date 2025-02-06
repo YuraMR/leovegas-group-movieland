@@ -8,7 +8,9 @@ it('movies starred and saved to watch later', async () => {
 
     await userEvent.type(screen.getByTestId('search-movies'), 'forrest gump')
     await waitFor(() => {
-      expect(screen.getAllByText('Through the Eyes of Forrest Gump')[0]).toBeInTheDocument()
+        expect(
+            screen.getAllByText('Through the Eyes of Forrest Gump')[0]
+        ).toBeInTheDocument()
     })
     const starMovieLink = screen.getAllByTestId('starred-link')[0]
     await waitFor(() => {
@@ -16,7 +18,7 @@ it('movies starred and saved to watch later', async () => {
     })
     await userEvent.click(starMovieLink)
     await waitFor(() => {
-      expect(screen.getByTestId('star-fill')).toBeInTheDocument()
+        expect(screen.getByTestId('star-fill')).toBeInTheDocument()
     })
     await waitFor(() => {
         expect(screen.getByTestId('unstar-link')).toBeInTheDocument()
@@ -28,7 +30,7 @@ it('movies starred and saved to watch later', async () => {
     })
     await userEvent.click(watchLaterLink)
     await waitFor(() => {
-      expect(screen.getByTestId('remove-watch-later')).toBeInTheDocument()
+        expect(screen.getByTestId('remove-watch-later')).toBeInTheDocument()
     })
 
     await userEvent.click(screen.getAllByTestId('remove-watch-later')[0])

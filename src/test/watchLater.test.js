@@ -8,7 +8,9 @@ it('Watch Later movies page', async () => {
 
     await userEvent.type(screen.getByTestId('search-movies'), 'forrest gump')
     await waitFor(() => {
-      expect(screen.getAllByText('Through the Eyes of Forrest Gump')[0]).toBeInTheDocument()
+        expect(
+            screen.getAllByText('Through the Eyes of Forrest Gump')[0]
+        ).toBeInTheDocument()
     })
     const watchLaterLink = screen.getAllByTestId('watch-later')[0]
     await waitFor(() => {
@@ -19,6 +21,6 @@ it('Watch Later movies page', async () => {
     // const watchLaterink = screen.getByTestId('watch-later-div')
     // await waitFor(() => {
     //     expect(watchLaterink).toBeInTheDocument()
-    // })    
+    // })
     // await userEvent.click(watchLaterink)
 })
