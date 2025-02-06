@@ -7,7 +7,7 @@ const Movies = () => {
     const { movies } = useSelector((state) => state)
 
     return (
-        <div data-testid="movies">
+        <div className="movies-container" data-testid="movies">
             {movies.movies.results?.map((movie) => (
                 <Movie movie={movie} key={movie.id} />
             ))}
