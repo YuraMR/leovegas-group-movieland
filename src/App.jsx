@@ -1,37 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
-    Routes,
-    Route,
     createSearchParams,
     useSearchParams,
     useNavigate
 } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import 'reactjs-popup/dist/index.css'
+
 import { fetchMovies } from './data/moviesSlice'
 import Header from './components/Header'
-import Movies from './components/Movies'
-import Starred from './components/Starred'
-import WatchLater from './components/WatchLater'
 import YouTubePlayer from './components/YoutubePlayer'
-import './app.scss'
 import ROUTES from './constants/routes'
-import { fetchMovieDetails } from './utils/apiEndpoints'
+import './app.scss'
+import AppRouter from './AppRouter'
 
-/** the component must be split into smaller components
- * 1. AppRoutes component responsible only for routes must be declared
- * 2. The logic related to open/close the trailer must be declared separately, in the dedicated slice */
 const App = () => {
     const dispatch = useDispatch()
+    const { videoKey } = useSelector((state) => state.trailer)
+
     const [searchParams, setSearchParams] = useSearchParams()
     const searchQuery = searchParams.get('search')
-    const [videoKey, setVideoKey] = useState()
-    const [isOpen, setOpen] = useState(false)
     const navigate = useNavigate()
-
-    const closeModal = () => setOpen(false)
-
-    const closeCard = () => {}
 
     const getSearchResults = (query) => {
         if (query !== '') {
@@ -64,33 +53,9 @@ const App = () => {
         getMovies()
     }, [])
 
-    const getMovie = async (id) => {
-        setVideoKey(null)
-        /** implementation of api service must be hidden  */
-        const videoData = await fetchMovieDetails(id)
-
-        if (videoData.videos && videoData.videos.results.length) {
-            const trailer = videoData.videos.results.find(
-                /** such values like types must be listed in enums/constants */
-                (vid) => vid.type === 'Trailer'
-            )
-            setVideoKey(trailer ? trailer.key : videoData.videos.results[0].key)
-        }
-    }
-
-    const viewTrailer = (movie) => {
-        getMovie(movie.id)
-        if (!videoKey) setOpen(true)
-        setOpen(true)
-    }
-
     return (
         <div className="App">
-            <Header
-                searchMovies={searchMovies}
-                searchParams={searchParams}
-                setSearchParams={setSearchParams}
-            />
+            <Header searchMovies={searchMovies} />
 
             <div className="container">
                 {videoKey ? (
@@ -100,30 +65,7 @@ const App = () => {
                         <h6>no trailer available. Try another movie</h6>
                     </div>
                 )}
-
-                <Routes>
-                    <Route
-                        path={ROUTES.HOME}
-                        element={
-                            <Movies
-                                viewTrailer={viewTrailer}
-                                closeCard={closeCard}
-                            />
-                        }
-                    />
-                    <Route
-                        path={ROUTES.STARRED}
-                        element={<Starred viewTrailer={viewTrailer} />}
-                    />
-                    <Route
-                        path={ROUTES.WATCH_LATER}
-                        element={<WatchLater viewTrailer={viewTrailer} />}
-                    />
-                    <Route
-                        path="*"
-                        element={<h1 className="not-found">Page Not Found</h1>}
-                    />
-                </Routes>
+                <AppRouter />
             </div>
         </div>
     )

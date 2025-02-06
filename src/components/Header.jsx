@@ -9,13 +9,11 @@ const Header = ({ searchMovies }) => {
 
     const starredMoviesList = Object.values(starredMovies)
 
+    const resetSearch = () => searchMovies('')
+
     return (
         <header>
-            <Link
-                to={ROUTES.HOME}
-                data-testid="home"
-                onClick={() => searchMovies('')}
-            >
+            <Link to={ROUTES.HOME} data-testid="home" onClick={resetSearch}>
                 <i className="bi bi-film" />
             </Link>
 
@@ -44,7 +42,7 @@ const Header = ({ searchMovies }) => {
             <div className="input-group rounded">
                 <Link
                     to={ROUTES.HOME}
-                    onClick={(e) => searchMovies('')}
+                    onClick={resetSearch}
                     className="search-link"
                 >
                     <input

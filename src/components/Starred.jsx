@@ -5,7 +5,7 @@ import Movie from './Movie'
 import '../styles/starred.scss'
 import ROUTES from '../constants/routes'
 
-const Starred = ({ viewTrailer }) => {
+const Starred = () => {
     const { starred } = useSelector((state) => state)
     const { clearAllStarred } = starredSlice.actions
     const dispatch = useDispatch()
@@ -20,11 +20,7 @@ const Starred = ({ viewTrailer }) => {
                     <h6 className="header">Starred movies</h6>
                     <div className="row">
                         {starredMoviesList.map((movie) => (
-                            <Movie
-                                movie={movie}
-                                key={movie.id}
-                                viewTrailer={viewTrailer}
-                            />
+                            <Movie movie={movie} key={movie.id} />
                         ))}
                     </div>
 
