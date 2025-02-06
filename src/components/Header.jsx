@@ -7,6 +7,8 @@ import ROUTES from '../constants/routes'
 const Header = ({ searchMovies }) => {
     const { starredMovies } = useSelector((state) => state.starred)
 
+    const starredMoviesList = Object.values(starredMovies)
+
     return (
         <header>
             <Link
@@ -23,11 +25,11 @@ const Header = ({ searchMovies }) => {
                     data-testid="nav-starred"
                     className="nav-starred"
                 >
-                    {starredMovies.length > 0 ? (
+                    {starredMoviesList.length > 0 ? (
                         <>
                             <i className="bi bi-star-fill bi-star-fill-white" />
                             <sup className="star-number">
-                                {starredMovies.length}
+                                {starredMoviesList.length}
                             </sup>
                         </>
                     ) : (

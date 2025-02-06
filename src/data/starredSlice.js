@@ -3,20 +3,18 @@ import { createSlice } from '@reduxjs/toolkit'
 const starredSlice = createSlice({
     name: 'starred',
     initialState: {
-        starredMovies: []
+        starredMovies: {}
     },
     reducers: {
         starMovie: (state, action) => {
-            state.starredMovies = [action.payload, ...state.starredMovies]
+            const movie = action.payload
+            state.starredMovies[movie.id] = movie
         },
         unstarMovie: (state, action) => {
-            const indexOfId = state.starredMovies.findIndex(
-                (key) => key.id === action.payload.id
-            )
-            state.starredMovies.splice(indexOfId, 1)
+            delete state.starredMovies[action.payload]
         },
         clearAllStarred: (state) => {
-            state.starredMovies = []
+            state.starredMovies = {}
         }
     }
 })

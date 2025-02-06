@@ -31,9 +31,18 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
                         <div className="year">
                             {movie.release_date?.substring(0, 4)}
                         </div>
-                        {!starred.starredMovies
-                            .map((movie) => movie.id)
-                            .includes(movie.id) ? (
+                        {starred.starredMovies[movie.id] ? (
+                            <span
+                                className="btn-star"
+                                data-testid="unstar-link"
+                                onClick={() => dispatch(unstarMovie(movie.id))}
+                            >
+                                <i
+                                    className="bi bi-star-fill"
+                                    data-testid="star-fill"
+                                />
+                            </span>
+                        ) : (
                             <span
                                 className="btn-star"
                                 data-testid="starred-link"
@@ -55,21 +64,19 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
                             >
                                 <i className="bi bi-star" />
                             </span>
-                        ) : (
-                            <span
-                                className="btn-star"
-                                data-testid="unstar-link"
-                                onClick={() => dispatch(unstarMovie(movie))}
-                            >
-                                <i
-                                    className="bi bi-star-fill"
-                                    data-testid="star-fill"
-                                />
-                            </span>
                         )}
-                        {!watchLater.watchLaterMovies
-                            .map((movie) => movie.id)
-                            .includes(movie.id) ? (
+                        {watchLater.watchLaterMovies[movie.id] ? (
+                            <button
+                                type="button"
+                                data-testid="remove-watch-later"
+                                className="btn btn-light btn-watch-later blue"
+                                onClick={() =>
+                                    dispatch(removeFromWatchLater(movie.id))
+                                }
+                            >
+                                <i className="bi bi-check"></i>
+                            </button>
+                        ) : (
                             <button
                                 type="button"
                                 data-testid="watch-later"
@@ -91,17 +98,6 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
                                 }
                             >
                                 Watch Later
-                            </button>
-                        ) : (
-                            <button
-                                type="button"
-                                data-testid="remove-watch-later"
-                                className="btn btn-light btn-watch-later blue"
-                                onClick={() =>
-                                    dispatch(removeFromWatchLater(movie))
-                                }
-                            >
-                                <i className="bi bi-check"></i>
                             </button>
                         )}
                         <button

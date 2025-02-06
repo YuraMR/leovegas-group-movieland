@@ -6,18 +6,20 @@ import '../styles/starred.scss'
 import ROUTES from '../constants/routes'
 
 const Starred = ({ viewTrailer }) => {
-    const state = useSelector((state) => state)
-    const { starred } = state
+    const { starred } = useSelector((state) => state)
     const { clearAllStarred } = starredSlice.actions
     const dispatch = useDispatch()
 
+    const { starredMovies } = starred
+    const starredMoviesList = Object.values(starredMovies)
+
     return (
         <div className="starred" data-testid="starred">
-            {starred.starredMovies.length > 0 && (
+            {starredMoviesList.length > 0 && (
                 <div data-testid="starred-movies" className="starred-movies">
                     <h6 className="header">Starred movies</h6>
                     <div className="row">
-                        {starred.starredMovies.map((movie) => (
+                        {starredMoviesList.map((movie) => (
                             <Movie
                                 movie={movie}
                                 key={movie.id}
@@ -37,7 +39,7 @@ const Starred = ({ viewTrailer }) => {
                 </div>
             )}
 
-            {starred.starredMovies.length === 0 && (
+            {starredMoviesList.length === 0 && (
                 <div className="text-center empty-cart">
                     <i className="bi bi-star" />
                     <p>There are no starred movies.</p>
