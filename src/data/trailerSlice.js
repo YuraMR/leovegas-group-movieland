@@ -60,4 +60,6 @@ const trailerSlice = createSlice({
     }
 })
 
+export const { closeTrailerModal } = trailerSlice.actions
+
 export default trailerSlice

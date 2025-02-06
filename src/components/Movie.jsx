@@ -1,24 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux'
+import Popup from 'reactjs-popup'
+import classNames from 'classnames'
+
 import placeholder from '../assets/not-found-500X750.jpeg'
-import { fetchTrailer } from '../data/trailerSlice'
+import { closeTrailerModal } from '../data/trailerSlice'
 import { addToWatchLater, removeFromWatchLater } from '../data/watchLaterSlice'
 import { starMovie, unstarMovie } from '../data/starredSlice'
+import YouTubePlayer from './YoutubePlayer'
 
 const Movie = ({ movie }) => {
-    const { starred, watchLater } = useSelector((state) => state)
+    const { starred, trailer, watchLater } = useSelector((state) => state)
+    const { isOpen: trailerIsOpen } = trailer
 
     const dispatch = useDispatch()
 
-    // const myClickHandler = (e) => {
-    //     if (!e) var e = window.event
-    //     e.cancelBubble = true
-    //     if (e.stopPropagation) e.stopPropagation()
-    //     e.target.parentElement.parentElement.classList.remove('opened')
-    // }
-
     return (
         <div className="wrapper col-3 col-sm-4 col-md-3 col-lg-3 col-xl-2">
-            <div className="card">
+            <div
+                className={classNames('card', {
+                    opened: trailerIsOpen
+                })}
+            >
                 <div className="card-body text-center">
                     <div className="overlay" />
                     <div className="info_panel">
@@ -95,13 +97,32 @@ const Movie = ({ movie }) => {
                                 Watch Later
                             </button>
                         )}
-                        <button
-                            type="button"
-                            className="btn btn-dark"
-                            onClick={() => dispatch(fetchTrailer(movie.id))}
+
+                        <Popup
+                            trigger={
+                                <button type="button" className="btn btn-dark">
+                                    View Trailer
+                                </button>
+                            }
+                            position="right center"
                         >
-                            View Trailer
-                        </button>
+                            {(close) => (
+                                <>
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        onClick={() => {
+                                            close()
+                                            dispatch(closeTrailerModal())
+                                        }}
+                                        aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <YouTubePlayer movieId={movie.id} />
+                                </>
+                            )}
+                        </Popup>
                     </div>
                     <img
                         className="center-block"
@@ -115,14 +136,6 @@ const Movie = ({ movie }) => {
                 </div>
                 <h6 className="title mobile-card">{movie.title}</h6>
                 <h6 className="title">{movie.title}</h6>
-                {/*<button*/}
-                {/*    type="button"*/}
-                {/*    className="close"*/}
-                {/*    onClick={(e) => myClickHandler(e)}*/}
-                {/*    aria-label="Close"*/}
-                {/*>*/}
-                {/*    <span aria-hidden="true">&times;</span>*/}
-                {/*</button>*/}
             </div>
         </div>
     )

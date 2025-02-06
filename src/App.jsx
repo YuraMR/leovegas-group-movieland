@@ -9,14 +9,12 @@ import 'reactjs-popup/dist/index.css'
 
 import { fetchMovies } from './data/moviesSlice'
 import Header from './components/Header'
-import YouTubePlayer from './components/YoutubePlayer'
 import ROUTES from './constants/routes'
 import './app.scss'
 import AppRouter from './AppRouter'
 
 const App = () => {
     const dispatch = useDispatch()
-    const { videoKey } = useSelector((state) => state.trailer)
 
     const [searchParams, setSearchParams] = useSearchParams()
     const searchQuery = searchParams.get('search')
@@ -58,13 +56,6 @@ const App = () => {
             <Header searchMovies={searchMovies} />
 
             <div className="container">
-                {videoKey ? (
-                    <YouTubePlayer videoKey={videoKey} />
-                ) : (
-                    <div style={{ padding: '30px' }}>
-                        <h6>no trailer available. Try another movie</h6>
-                    </div>
-                )}
                 <AppRouter />
             </div>
         </div>
