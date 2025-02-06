@@ -7,6 +7,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import moviesSlice from '../data/moviesSlice'
 import starredSlice from '../data/starredSlice'
 import watchLaterSlice from '../data/watchLaterSlice'
+import trailerSlice from '../data/trailerSlice'
 
 export function renderWithProviders(
     ui,
@@ -16,7 +17,8 @@ export function renderWithProviders(
             reducer: {
                 movies: moviesSlice.reducer,
                 starred: starredSlice.reducer,
-                watchLater: watchLaterSlice.reducer
+                watchLater: watchLaterSlice.reducer,
+                trailer: trailerSlice.reducer
             },
             preloadedState
         }),
