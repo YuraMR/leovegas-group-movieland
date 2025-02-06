@@ -6,7 +6,7 @@ import {
     useSearchParams,
     useNavigate
 } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import 'reactjs-popup/dist/index.css'
 import { fetchMovies } from './data/moviesSlice'
 import Header from './components/Header'
@@ -18,9 +18,10 @@ import './app.scss'
 import ROUTES from './constants/routes'
 import { fetchMovieDetails } from './utils/apiEndpoints'
 
+/** the component must be split into smaller components
+ * 1. AppRoutes component responsible only for routes must be declared
+ * 2. The logic related to open/close the trailer must be declared separately, in the dedicated slice */
 const App = () => {
-    const state = useSelector((state) => state)
-    const { movies } = state
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams()
     const searchQuery = searchParams.get('search')
@@ -59,11 +60,9 @@ const App = () => {
         }
     }
 
-    const viewTrailer = (movie) => {
-        getMovie(movie.id)
-        if (!videoKey) setOpen(true)
-        setOpen(true)
-    }
+    useEffect(() => {
+        getMovies()
+    }, [])
 
     const getMovie = async (id) => {
         setVideoKey(null)
@@ -79,9 +78,11 @@ const App = () => {
         }
     }
 
-    useEffect(() => {
-        getMovies()
-    }, [])
+    const viewTrailer = (movie) => {
+        getMovie(movie.id)
+        if (!videoKey) setOpen(true)
+        setOpen(true)
+    }
 
     return (
         <div className="App">
@@ -105,7 +106,6 @@ const App = () => {
                         path={ROUTES.HOME}
                         element={
                             <Movies
-                                movies={movies}
                                 viewTrailer={viewTrailer}
                                 closeCard={closeCard}
                             />
