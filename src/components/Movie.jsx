@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
-import starredSlice from '../data/starredSlice'
-import watchLaterSlice from '../data/watchLaterSlice'
 import placeholder from '../assets/not-found-500X750.jpeg'
 import { fetchTrailer } from '../data/trailerSlice'
+import { addToWatchLater, removeFromWatchLater } from '../data/watchLaterSlice'
+import { starMovie, unstarMovie } from '../data/starredSlice'
 
 const Movie = ({ movie }) => {
     const { starred, watchLater } = useSelector((state) => state)
-    const { starMovie, unstarMovie } = starredSlice.actions
-    const { addToWatchLater, removeFromWatchLater } = watchLaterSlice.actions
 
     const dispatch = useDispatch()
 

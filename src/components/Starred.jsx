@@ -1,17 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import starredSlice from '../data/starredSlice'
+import { clearAllStarred, selectStarredMoviesList } from '../data/starredSlice'
 import Movie from './Movie'
 import '../styles/starred.scss'
 import ROUTES from '../constants/routes'
 
 const Starred = () => {
-    const { starred } = useSelector((state) => state)
-    const { clearAllStarred } = starredSlice.actions
     const dispatch = useDispatch()
 
-    const { starredMovies } = starred
-    const starredMoviesList = Object.values(starredMovies)
+    const starredMoviesList = useSelector(selectStarredMoviesList)
 
     return (
         <div className="starred" data-testid="starred">

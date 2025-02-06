@@ -19,4 +19,9 @@ const starredSlice = createSlice({
     }
 })
 
+export const selectStarredMoviesList = (state) =>
+    Object.values(state.starred.starredMovies)
+
+export const { starMovie, unstarMovie, clearAllStarred } = starredSlice.actions
+
 export default starredSlice

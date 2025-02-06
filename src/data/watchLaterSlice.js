@@ -19,4 +19,9 @@ const watchLaterSlice = createSlice({
     }
 })
 
+export const selectWatchLaterMoviesList = (state) =>
+    Object.values(state.watchLater.watchLaterMovies)
+
+export const { addToWatchLater, removeFromWatchLater, removeAllWatchLater } =
+    watchLaterSlice.actions
 export default watchLaterSlice

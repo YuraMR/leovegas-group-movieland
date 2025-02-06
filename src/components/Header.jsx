@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux'
 
 import '../styles/header.scss'
 import ROUTES from '../constants/routes'
+import { selectStarredMoviesList } from '../data/starredSlice'
 
 const Header = ({ searchMovies }) => {
-    const { starredMovies } = useSelector((state) => state.starred)
-
-    const starredMoviesList = Object.values(starredMovies)
+    const starredMoviesList = useSelector(selectStarredMoviesList)
 
     const resetSearch = () => searchMovies('')
 

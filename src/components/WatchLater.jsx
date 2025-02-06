@@ -1,18 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import watchLaterSlice from '../data/watchLaterSlice'
+import {
+    removeAllWatchLater,
+    selectWatchLaterMoviesList
+} from '../data/watchLaterSlice'
 import '../styles/starred.scss'
 import ROUTES from '../constants/routes'
 import Movie from './Movie'
 
 const WatchLater = () => {
-    const { watchLater } = useSelector((state) => state)
-    const { removeAllWatchLater } = watchLaterSlice.actions
     const dispatch = useDispatch()
 
-    const { watchLaterMovies } = watchLater
-    const watchLaterMoviesList = Object.values(watchLaterMovies)
+    const watchLaterMoviesList = useSelector(selectWatchLaterMoviesList)
 
     return (
         <div className="starred" data-testid="watch-later-div">
