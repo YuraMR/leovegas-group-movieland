@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import watchLaterSlice from '../data/watchLaterSlice'
 import Movie from './Movie'
 import '../styles/starred.scss'
+import ROUTES from '../constants/routes'
 
 const WatchLater = ({ viewTrailer }) => {
     const state = useSelector((state) => state)
@@ -44,7 +45,7 @@ const WatchLater = ({ viewTrailer }) => {
                     <i className="bi bi-heart" />
                     <p>You have no movies saved to watch later.</p>
                     <p>
-                        Go to <Link to="/">Home</Link>
+                        Go to <Link to={ROUTES.HOME}>Home</Link>
                     </p>
                 </div>
             )}

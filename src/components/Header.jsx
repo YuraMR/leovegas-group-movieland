@@ -2,19 +2,24 @@ import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import '../styles/header.scss'
+import ROUTES from '../constants/routes'
 
 const Header = ({ searchMovies }) => {
     const { starredMovies } = useSelector((state) => state.starred)
 
     return (
         <header>
-            <Link to="/" data-testid="home" onClick={() => searchMovies('')}>
+            <Link
+                to={ROUTES.HOME}
+                data-testid="home"
+                onClick={() => searchMovies('')}
+            >
                 <i className="bi bi-film" />
             </Link>
 
             <nav>
                 <NavLink
-                    to="/starred"
+                    to={ROUTES.STARRED}
                     data-testid="nav-starred"
                     className="nav-starred"
                 >
@@ -29,14 +34,14 @@ const Header = ({ searchMovies }) => {
                         <i className="bi bi-star" />
                     )}
                 </NavLink>
-                <NavLink to="/watch-later" className="nav-fav">
+                <NavLink to={ROUTES.WATCH_LATER} className="nav-fav">
                     watch later
                 </NavLink>
             </nav>
 
             <div className="input-group rounded">
                 <Link
-                    to="/"
+                    to={ROUTES.HOME}
                     onClick={(e) => searchMovies('')}
                     className="search-link"
                 >

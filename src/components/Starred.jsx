@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import starredSlice from '../data/starredSlice'
 import Movie from './Movie'
 import '../styles/starred.scss'
+import ROUTES from '../constants/routes'
 
 const Starred = ({ viewTrailer }) => {
     const state = useSelector((state) => state)
@@ -41,7 +42,7 @@ const Starred = ({ viewTrailer }) => {
                     <i className="bi bi-star" />
                     <p>There are no starred movies.</p>
                     <p>
-                        Go to <Link to="/">Home</Link>
+                        Go to <Link to={ROUTES.HOME}>Home</Link>
                     </p>
                 </div>
             )}

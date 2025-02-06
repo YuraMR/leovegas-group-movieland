@@ -14,13 +14,14 @@ import {
     ENDPOINT_DISCOVER,
     ENDPOINT,
     API_KEY
-} from './constants'
+} from './constants/apiEndpoints'
 import Header from './components/Header'
 import Movies from './components/Movies'
 import Starred from './components/Starred'
 import WatchLater from './components/WatchLater'
 import YouTubePlayer from './components/YoutubePlayer'
 import './app.scss'
+import ROUTES from './constants/routes'
 
 const App = () => {
     const state = useSelector((state) => state)
@@ -47,7 +48,7 @@ const App = () => {
     }
 
     const searchMovies = (query) => {
-        navigate('/')
+        navigate(ROUTES.HOME)
         getSearchResults(query)
     }
 
@@ -102,7 +103,7 @@ const App = () => {
 
                 <Routes>
                     <Route
-                        path="/"
+                        path={ROUTES.HOME}
                         element={
                             <Movies
                                 movies={movies}
@@ -112,11 +113,11 @@ const App = () => {
                         }
                     />
                     <Route
-                        path="/starred"
+                        path={ROUTES.STARRED}
                         element={<Starred viewTrailer={viewTrailer} />}
                     />
                     <Route
-                        path="/watch-later"
+                        path={ROUTES.WATCH_LATER}
                         element={<WatchLater viewTrailer={viewTrailer} />}
                     />
                     <Route
