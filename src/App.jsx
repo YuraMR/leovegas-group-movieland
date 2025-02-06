@@ -72,6 +72,7 @@ const App = () => {
 
         if (videoData.videos && videoData.videos.results.length) {
             const trailer = videoData.videos.results.find(
+                /** such values like types must be listed in enums/constants */
                 (vid) => vid.type === 'Trailer'
             )
             setVideoKey(trailer ? trailer.key : videoData.videos.results[0].key)
