@@ -1,20 +1,16 @@
-import Movie from './Movie'
-import '../styles/movies.scss'
+import { useSelector } from 'react-redux'
 
-const Movies = ({ movies, viewTrailer, closeCard }) => {
+import '../styles/movies.scss'
+import Movie from './Movie'
+
+const Movies = () => {
+    const { movies } = useSelector((state) => state)
 
     return (
         <div data-testid="movies">
-            {movies.movies.results?.map((movie) => {
-                return (
-                    <Movie 
-                        movie={movie} 
-                        key={movie.id}
-                        viewTrailer={viewTrailer}
-                        closeCard={closeCard}
-                    />
-                )
-            })}
+            {movies.movies.results?.map((movie) => (
+                <Movie movie={movie} key={movie.id} />
+            ))}
         </div>
     )
 }
